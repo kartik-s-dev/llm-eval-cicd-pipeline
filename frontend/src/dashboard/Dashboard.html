@@ -342,17 +342,17 @@ if (!localStorage.getItem('supabase_auth_token')) {
 
 const savedUserInfo = localStorage.getItem('user_info');
 const userInfo = savedUserInfo ? JSON.parse(savedUserInfo) : {
-    username: 'kartik8',
-    email: 'kartik8@test.com',
-    sessionStatus: 'Active',
+    username: 'Unknown User',
+    email: 'N/A',
+    sessionStatus: 'Unknown',
     lastLogin: new Date().toISOString()
 };
 
-document.getElementById('prof-username').innerText = userInfo.username || 'kartik8';
-document.getElementById('prof-email').innerText = userInfo.email || 'kartik8@test.com';
+document.getElementById('prof-username').innerText = userInfo.username || 'Unknown User';
+document.getElementById('prof-email').innerText = userInfo.email || 'N/A';
 document.getElementById('prof-status').innerText = userInfo.sessionStatus || 'Active';
 document.getElementById('prof-verified').innerText = userInfo.lastLogin ? new Date(userInfo.lastLogin).toLocaleTimeString() : new Date().toLocaleTimeString();
-document.getElementById('welcome-name').innerText = userInfo.username || 'kartik8';
+document.getElementById('welcome-name').innerText = userInfo.username || 'Unknown User';
 document.getElementById('session-badge').innerText = `Session: ${userInfo.sessionStatus || 'Active'}`;
 
 const BACKEND_URL = 'https://llm-eval-backend-v2.onrender.com';
