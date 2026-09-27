@@ -4,6 +4,20 @@ A Node.js/Express backend + static HTML frontend for running lightweight,
 heuristic-based LLM response evaluations (faithfulness, hallucination,
 coherence, conciseness, safety) and viewing results on a dashboard.
 
+## Post-submission updates
+
+After initial submission, the following issues were identified and fixed:
+
+- **Authentication**: fixed a broken backend URL and a response-field
+  mismatch that silently blocked all logins; added a guard so the dashboard
+  redirects unauthenticated users instead of loading with placeholder data.
+- **Dashboard integrity**: the dashboard previously showed hardcoded sample
+  metrics (scores, pass/fail verdicts, model comparisons) even when zero
+  evaluations had been run. It now returns genuinely empty state until real
+  evaluation data exists in the database.
+
+This section will be updated as further fixes land.
+
 ## Setup
 
 ```bash
