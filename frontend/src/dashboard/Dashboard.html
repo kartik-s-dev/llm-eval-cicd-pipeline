@@ -545,21 +545,18 @@ let historicalChartInstance = null;
 
 function initializeHistoricalAnalytics() {
     let trend = evaluationDetailsCache.performanceTrend || [];
-    
-    // Create a visual baseline wave if values are flat or single
-    if (trend.length <= 2) {
-        const now = new Date();
-        const t1 = new Date(now.getTime() - 10 * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const t2 = new Date(now.getTime() - 5 * 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const t3 = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const chartCanvas = document.getElementById('historicalTrendsChart');
+    const chartCard = chartCanvas ? chartCanvas.closest('.chart-card') : null;
 
-        const latestAcc = trend.length > 0 ? (trend[trend.length - 1].accuracy || 94.7) : 94.7;
-        
-        trend = [
-            { date: t1, accuracy: 91.2 },
-            { date: t2, accuracy: 96.5 },
-            { date: t3, accuracy: Number(latestAcc) }
-        ];
+    if (trend.length === 0) {
+        if (chartCard) {
+            chartCard.innerHTML = '<h3>Performance Trends (Historical Accuracy)</h3><p style="color:#94a3b8;">No evaluation runs available yet.</p>';
+        }
+        const timelineContainer = document.getElementById('timeline-container');
+        if (timelineContainer) {
+            timelineContainer.innerHTML = '<p style="color:#94a3b8;">No evaluation runs available.</p>';
+        }
+        return;
     }
 
     const ctx = document.getElementById('historicalTrendsChart').getContext('2d');
