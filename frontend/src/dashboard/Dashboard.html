@@ -336,6 +336,10 @@
 </div>
 
 <script>
+if (!localStorage.getItem('supabase_auth_token')) {
+    window.location.href = '../authentication/Login.html';
+}
+
 const savedUserInfo = localStorage.getItem('user_info');
 const userInfo = savedUserInfo ? JSON.parse(savedUserInfo) : {
     username: 'kartik8',
