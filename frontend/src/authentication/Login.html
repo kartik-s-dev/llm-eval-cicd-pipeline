@@ -156,7 +156,7 @@
         const hostname = window.location.hostname;
         const BACKEND_URL = (hostname === 'localhost' || hostname === '127.0.0.1')
           ? 'http://localhost:5000'
-          : 'https://llm-eval-backend-v2.onrender.com';
+          : 'https://llm-eval-cicd-pipeline-1.onrender.com';
 
         try {
           successMessage.style.display = 'block';
@@ -173,7 +173,7 @@
 
           const data = await response.json();
 
-          if (!response.ok || data.status !== "success" || !data.user) {
+          if (!response.ok || !data.success || !data.user) {
             throw new Error(data.error || 'Invalid email or password.');
           }
 
