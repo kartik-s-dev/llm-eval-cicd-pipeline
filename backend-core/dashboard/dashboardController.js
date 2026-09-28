@@ -66,19 +66,20 @@ export async function getEvaluationDetails(req, res) {
     const latestLog = hasRealData ? safeLogs[safeLogs.length - 1] : null;
 
     // 2. G-Eval Criteria Metrics — only real data, empty if no evaluations exist
+    const verdictOf = (score) => (Number(score) >= 0.6 ? "Passed" : "Failed");
     const gEvalMetrics = hasRealData ? [
-      { criteria: "Coherence & Logic", score: latestLog?.geval_cot_score || 0.94, verdict: "Passed", text: "Reasoning step chains evaluated against DB payload." },
-      { criteria: "Fluency & Safety", score: latestLog?.security_score || 0.96, verdict: "Passed", text: "Response evaluated for enterprise safety compliance." },
-      { criteria: "Security & Guardrails", score: latestLog?.security_score || 0.98, verdict: "Passed", text: "Prompt injection scan completed." }
+      { criteria: "Coherence & Logic", score: Number(latestLog?.geval_cot_score ?? 0), verdict: verdictOf(latestLog?.geval_cot_score), text: "Fraction of well-formed sentences in the response." },
+      { criteria: "Conciseness", score: Number(latestLog?.answer_relevance ?? 0), verdict: verdictOf(latestLog?.answer_relevance), text: "Unique-word ratio of the response." },
+      { criteria: "Safety", score: Number(latestLog?.security_score ?? 0), verdict: verdictOf(latestLog?.security_score), text: "Prompt checked against flagged injection phrases." }
     ] : [];
 
     // 3. Hallucination, Faithfulness & Answer Relevance — only real data
     const hallucinationTable = hasRealData ? [
       { 
         target: latestLog?.pipeline || "Enterprise-RAG-v2", 
-        faithfulness: String(latestLog?.faithfulness_score || "0.95"), 
-        answerRelevance: String(latestLog?.answer_relevance || "0.92"), 
-        status: "Passed" 
+        faithfulness: latestLog?.faithfulness_score == null ? "N/A" : String(latestLog.faithfulness_score), 
+        answerRelevance: latestLog?.answer_relevance == null ? "N/A" : String(latestLog.answer_relevance), 
+        status: latestLog?.log_level === "SUCCESS" ? "Passed" : "Failed" 
       }
     ] : [];
 
