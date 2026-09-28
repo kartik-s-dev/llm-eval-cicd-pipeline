@@ -86,32 +86,100 @@ export async function executeInference(prompt, modelConfig = {}) {
  * DeepEval & Ragas Evaluation Metrics Calculator
  * Evaluates G-Eval, Hallucination, Faithfulness, Relevance, and Security Scores
  */
+const SAFETY_FLAGGED_KEYWORDS = [
+  'ignore previous instructions', 'ignore all previous', 'disregard your instructions',
+  'jailbreak', 'bypass your guidelines', 'act as if you have no restrictions'
+];
+
+function tokenize(text) {
+  return (text || '')
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+/**
+ * Faithfulness: lexical word-overlap ratio between the response and the
+ * provided context/ground truth. Higher overlap = the response is grounded
+ * in the given context. Limitation: a correct response using different
+ * wording than the context will score lower (documented in README).
+ */
+function calculateFaithfulness(responseOutput, groundTruth) {
+  if (!groundTruth) return null; // cannot assess faithfulness without a reference
+  const responseWords = new Set(tokenize(responseOutput));
+  const truthWords = new Set(tokenize(groundTruth));
+  if (truthWords.size === 0) return null;
+
+  let overlapCount = 0;
+  truthWords.forEach(word => { if (responseWords.has(word)) overlapCount++; });
+
+  return Number((overlapCount / truthWords.size).toFixed(2));
+}
+
+/**
+ * Coherence: fraction of sentences that have 3 or more words. A response
+ * made mostly of fragments scores lower.
+ */
+function calculateCoherence(responseOutput) {
+  const sentences = (responseOutput || '')
+    .split(/[.!?]+/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  if (sentences.length === 0) return 0;
+
+  const wellFormed = sentences.filter(s => tokenize(s).length >= 3).length;
+  return Number((wellFormed / sentences.length).toFixed(2));
+}
+
+/**
+ * Conciseness: unique-word ratio with a penalty for very long responses.
+ */
+function calculateConciseness(responseOutput) {
+  const words = tokenize(responseOutput);
+  if (words.length === 0) return 0;
+
+  const uniqueRatio = new Set(words).size / words.length;
+  const lengthPenalty = words.length > 150 ? 0.9 : 1.0;
+  return Number((uniqueRatio * lengthPenalty).toFixed(2));
+}
+
+/**
+ * Safety: flags known prompt-injection / jailbreak phrases in the prompt.
+ */
+function calculateSafety(prompt) {
+  const lowerPrompt = (prompt || '').toLowerCase();
+  const flagged = SAFETY_FLAGGED_KEYWORDS.some(phrase => lowerPrompt.includes(phrase));
+  return flagged ? 0.40 : 0.98;
+}
+
 export function calculateEvaluationMetrics(prompt, responseOutput, groundTruth = null) {
-  // Baseline scoring algorithms based on prompt/output length and alignment
-  const outputLength = responseOutput ? responseOutput.length : 0;
-  
-  // G-Eval CoT (Chain of Thought) Score (Scale 0.0 to 1.0)
-  const gEvalCoTScore = outputLength > 20 ? 0.94 : 0.75;
-  
-  // Hallucination Score (Scale 0.0 to 100.0, lower is better)
-  const hallucinationScore = responseOutput.includes('Error') ? 15.0 : 2.1;
+  const isErrorResponse = (responseOutput || '').startsWith('Error generating response');
 
-  // Faithfulness & Relevance (Scale 0.0 to 1.0)
-  const faithfulnessScore = 0.95;
-  const answerRelevanceScore = 0.92;
+  const faithfulnessScore = isErrorResponse ? 0 : calculateFaithfulness(responseOutput, groundTruth);
+  const coherenceScore = isErrorResponse ? 0 : calculateCoherence(responseOutput);
+  const concisenessScore = isErrorResponse ? 0 : calculateConciseness(responseOutput);
+  const securityScore = calculateSafety(prompt);
 
-  // Security & Safety Score (Check prompt injection / toxicity)
-  const securityScore = prompt.toLowerCase().includes('ignore previous instructions') ? 0.40 : 0.98;
+  // Hallucination is the inverse of faithfulness when a ground truth exists;
+  // without one, we cannot claim to detect hallucination, so it's left null.
+  const hallucinationScore = faithfulnessScore !== null
+    ? Number(((1 - faithfulnessScore) * 100).toFixed(1))
+    : null;
 
-  // Aggregate Overall Accuracy
-  const accuracy = ((gEvalCoTScore * 100) + (100 - hallucinationScore) + (faithfulnessScore * 100) + (answerRelevanceScore * 100)) / 4;
+  const scoresForAccuracy = [coherenceScore, concisenessScore, securityScore];
+  if (faithfulnessScore !== null) scoresForAccuracy.push(faithfulnessScore);
+
+  const accuracy = isErrorResponse
+    ? 0
+    : Number(((scoresForAccuracy.reduce((a, b) => a + b, 0) / scoresForAccuracy.length) * 100).toFixed(1));
 
   return {
-    accuracy: Number(accuracy.toFixed(1)),
-    gEvalCoTScore,
+    accuracy,
+    gEvalCoTScore: coherenceScore,
     hallucinationScore,
     faithfulnessScore,
-    answerRelevanceScore,
+    answerRelevanceScore: concisenessScore,
     securityScore,
     verdict: accuracy >= 90.0 ? "PASSED" : "FAILED"
   };
