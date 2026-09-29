@@ -15,12 +15,16 @@ export async function executeInference(prompt, modelConfig = {}) {
       return { output: `[Simulated Gemini Output for prompt: "${prompt}"]`, provider: 'Google Gemini' };
     }
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
       });
       const data = await response.json();
+      if (data.error) {
+        console.error("[GEMINI API ERROR]", data.error.message);
+        return { output: `Error generating response via Gemini: ${data.error.message}`, provider: 'Google Gemini' };
+      }
       const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response text generated.";
       return { output: outputText, provider: 'Google Gemini' };
     } catch (err) {
