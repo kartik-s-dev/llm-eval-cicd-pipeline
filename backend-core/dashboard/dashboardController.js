@@ -116,10 +116,12 @@ export async function getEvaluationDetails(req, res) {
       ? Number((safeLogs.reduce((acc, curr) => acc + (Number(curr.accuracy) || 0), 0) / safeLogs.length).toFixed(1))
       : 0;
 
-    const modelComparison = hasRealData ? [
-      { model: "gemini-1.5-pro", averageAccuracy: avgScore, totalCasesRun: currentRunCount },
-      { model: "llama-3-8b-8192 (Groq)", averageAccuracy: 91.8, totalCasesRun: currentRunCount }
-    ] : [];
+    const modelsUsed = [...new Set(safeLogs.map(log => log.model || log.model_name).filter(Boolean))];
+    const modelComparison = hasRealData ? modelsUsed.map(modelName => {
+      const modelLogs = safeLogs.filter(log => (log.model || log.model_name) === modelName);
+      const modelAvg = Number((modelLogs.reduce((acc, curr) => acc + (Number(curr.accuracy) || 0), 0) / modelLogs.length).toFixed(1));
+      return { model: modelName, averageAccuracy: modelAvg, totalCasesRun: modelLogs.length };
+    }) : [];
 
     return res.status(200).json({
       gEvalMetrics,
