@@ -107,9 +107,9 @@ export async function getEvaluationDetails(req, res) {
         target_version: "v2.1.0",
         avg_input_tokens: 254,
         avg_output_tokens: 512,
-        success_evaluation_rate: "100%"
-      }
-    ] : [];
+      success_evaluation_rate: ((safeLogs.filter(l => l.log_level === 'SUCCESS').length / safeLogs.length) * 100).toFixed(1) + "%"
+    }
+      ] : [];
 
     // 7. Dynamic Model Comparison System — only real data
     const avgScore = hasRealData 
