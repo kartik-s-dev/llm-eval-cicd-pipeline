@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
  * Calls Google Gemini, Groq, or Hugging Face based on requested model
  */
 export async function executeInference(prompt, modelConfig = {}) {
-  const modelName = modelConfig.model || 'gemini-1.5-pro';
+    const modelName = modelConfig.model || 'gemini-3.1-flash-lite';
   console.log(`[EVAL ENGINE] Executing inference for model: ${modelName}`);
 
   // 1. Google Gemini API Router

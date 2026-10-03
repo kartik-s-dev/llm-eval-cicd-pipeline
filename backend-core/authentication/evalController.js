@@ -12,7 +12,7 @@ export async function runSuiteOrchestrator(req, res) {
       return res.status(400).json({ success: false, error: 'Prompt is required for evaluation execution.' });
     }
 
-    const selectedModel = modelConfig?.model || 'gemini-1.5-pro';
+        const selectedModel = modelConfig?.model || 'gemini-3.1-flash-lite';
     const targetPipeline = pipeline || 'Enterprise-RAG-v2';
     console.log(`[ORCHESTRATOR] Initiating test run for model: ${selectedModel}`);
 
