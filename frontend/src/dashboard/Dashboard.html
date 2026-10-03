@@ -295,7 +295,43 @@
         </div>
         <div class="timeline-card"><h3>Commit History Timeline</h3><div class="timeline-container" id="timeline-container"><p style="color:#94a3b8;">No evaluation runs available.</p></div></div>
     </div>
-
+    <!-- RUN EVALUATION -->
+    <div class="comparison-card">
+        <h3>Run New Evaluation</h3>
+        <label style="color:#94a3b8;">Prompt</label>
+        <input type="text" id="run-eval-prompt" value="What is the capital of France?" style="width:100%; padding:10px; margin:6px 0 14px 0; background:#0f172a; color:#e2e8f0; border:1px solid #334155; border-radius:6px; box-sizing:border-box;">
+        <label style="color:#94a3b8;">Ground Truth (correct answer)</label>
+        <input type="text" id="run-eval-truth" value="The capital of France is Paris." style="width:100%; padding:10px; margin:6px 0 14px 0; background:#0f172a; color:#e2e8f0; border:1px solid #334155; border-radius:6px; box-sizing:border-box;">
+        <button id="run-eval-btn" onclick="runNewEvaluation()" style="padding:10px 22px; background:#0ea5e9; color:#ffffff; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Run Evaluation</button>
+        <p id="run-eval-status" style="color:#94a3b8; margin-top:12px;"></p>
+    </div>
+    <script>
+    async function runNewEvaluation() {
+        var btn = document.getElementById('run-eval-btn');
+        var status = document.getElementById('run-eval-status');
+        var prompt = document.getElementById('run-eval-prompt').value.trim();
+        var truth = document.getElementById('run-eval-truth').value.trim();
+        if (!prompt) { status.textContent = 'Please enter a prompt.'; return; }
+        btn.disabled = true;
+        status.textContent = 'Running... first run can take up to 50 seconds (free server waking up).';
+        try {
+            var res = await fetch('https://llm-eval-backend-v2.onrender.com/api/eval/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt, groundTruth: truth })
+            });
+            var data = await res.json();
+            if (!data.success) {
+                status.textContent = 'Failed: ' + (data.error || 'Unknown error');
+            } else {
+                status.textContent = 'Verdict: ' + data.verdict + ' | Accuracy: ' + data.accuracy + '% | Model: ' + data.model + ' | Answer: ' + data.output + ' | Refresh the page to see it in the charts.';
+            }
+        } catch (e) {
+            status.textContent = 'Network error: ' + e.message;
+        }
+        btn.disabled = false;
+    }
+    </script>
     <!-- PIPELINE COMPARISON SYSTEM -->
     <div class="comparison-card">
         <h3>Side-by-Side Pipeline Comparison System</h3>
