@@ -43,68 +43,65 @@
         }
         .logout-btn:hover { background-color: #dc2626; }
         .container { padding: 2rem; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
-        
-        .welcome-card, .profile-section, .comparison-card, .prompt-card, .terminal-card, .tracing-card {
+
+        .welcome-card, .profile-section, .comparison-card, .terminal-card {
             background-color: #1e293b;
             padding: 2rem;
             border-radius: 8px;
             border: 1px solid #334155;
         }
         .profile-section { padding: 1.5rem; }
-        
+
+        .banner {
+            display: none;
+            background-color: #78350f;
+            color: #fde68a;
+            padding: 0.9rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .banner.error { background-color: #7f1d1d; color: #fecaca; }
+
         .profile-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
-        .profile-field {
-            background-color: #0f172a;
-            padding: 0.75rem;
-            border-radius: 6px;
-        }
+        .profile-field { background-color: #0f172a; padding: 0.75rem; border-radius: 6px; }
         .profile-field label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; display: block; }
         .profile-field span { font-size: 1rem; color: #f8fafc; font-weight: 500; }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-        .stat-card {
-            background-color: #1e293b;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #38bdf8;
-        }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .stat-card { background-color: #1e293b; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #38bdf8; }
         .stat-card h3 { margin: 0 0 0.5rem 0; color: #94a3b8; font-size: 0.875rem; text-transform: uppercase; }
         .stat-card p { margin: 0; font-size: 1.75rem; font-weight: bold; color: #f8fafc; }
-        
+
         .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .three-col-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .analytics-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
 
         @media (max-width: 968px) {
-            .two-col-grid, .analytics-grid, .three-col-grid { grid-template-columns: 1fr !important; }
+            .two-col-grid, .analytics-grid { grid-template-columns: 1fr !important; }
         }
-        
-        .chart-card, .timeline-card, .repo-card, .cicd-card, .geval-card, .hallucination-card, .trace-node-card, .sdk-sync-card, .qgate-card, .cloud-card {
+
+        .chart-card, .timeline-card, .repo-card, .results-card, .geval-card, .hallucination-card, .qgate-card, .cloud-card {
             background-color: #1e293b;
             padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid #334155;
         }
-        .chart-card h3, .timeline-card h3, .repo-card h3, .cicd-card h3, .geval-card h3, .hallucination-card h3, .tracing-card h3, .trace-node-card h3, .sdk-sync-card h3, .qgate-card h3, .cloud-card h3 { margin-top: 0; color: #38bdf8; margin-bottom: 1rem; }
-        
+        .chart-card h3, .timeline-card h3, .repo-card h3, .results-card h3, .geval-card h3, .hallucination-card h3, .qgate-card h3, .cloud-card h3 { margin-top: 0; color: #38bdf8; margin-bottom: 1rem; }
+        .note { font-size: 0.8rem; color: #94a3b8; margin: 0.75rem 0 0 0; line-height: 1.4; }
+
         .repo-meta-list { display: flex; flex-direction: column; gap: 0.65rem; }
         .repo-meta-item { display: flex; justify-content: space-between; background-color: #0f172a; padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.9rem; }
         .repo-meta-label { color: #94a3b8; }
         .repo-meta-value { color: #38bdf8; font-family: monospace; font-weight: bold; }
-        
+
         .standard-table { width: 100%; border-collapse: collapse; background-color: #0f172a; border-radius: 6px; overflow: hidden; }
         .standard-table th, .standard-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #334155; font-size: 0.875rem; }
         .standard-table th { background-color: #0f172a; color: #a78bfa; font-size: 0.75rem; text-transform: uppercase; }
-        
+
         .status-pill { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
         .status-success { background-color: #064e3b; color: #34d399; }
         .status-running { background-color: #78350f; color: #fbbf24; }
@@ -116,32 +113,28 @@
         .score-low { color: #f87171; background-color: rgba(248, 113, 113, 0.1); }
         .reasoning-text { font-size: 0.8rem; color: #94a3b8; font-style: italic; display: block; margin-top: 0.25rem; line-height: 1.3; }
 
-        .trace-tree { display: flex; flex-direction: column; gap: 0.75rem; }
-        .trace-step { background-color: #0f172a; padding: 0.85rem 1.25rem; border-radius: 6px; border-left: 3px solid #38bdf8; display: flex; justify-content: space-between; align-items: center; }
-        .trace-info { display: flex; flex-direction: column; gap: 0.2rem; }
-        .trace-name { font-weight: 600; color: #f8fafc; font-size: 0.95rem; }
-        .trace-duration { font-size: 0.8rem; color: #94a3b8; font-family: monospace; }
-
         .gate-condition { font-family: monospace; color: #f59e0b; font-weight: bold; }
 
         .timeline-container { display: flex; flex-direction: column; gap: 1rem; max-height: 320px; overflow-y: auto; }
         .timeline-item { background-color: #0f172a; padding: 0.75rem; border-radius: 6px; border-left: 3px solid #a78bfa; }
+        .timeline-item.fail { border-left-color: #f87171; }
         .timeline-commit { font-family: monospace; color: #38bdf8; font-size: 0.9rem; }
         .timeline-meta { font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem; }
         .timeline-metrics { font-size: 0.85rem; color: #34d399; margin-top: 0.25rem; font-weight: 600; }
-        
+        .timeline-item.fail .timeline-metrics { color: #f87171; }
+
         .selector-row { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
         .selector-group { flex: 1; min-width: 200px; }
         .selector-group label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase; }
         .selector-group select { width: 100%; padding: 0.75rem; background-color: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; font-size: 1rem; cursor: pointer; }
         .metric-name { font-weight: 600; color: #94a3b8; }
         .highlight-win { color: #34d399; font-weight: bold; }
-        
-        .template-name { font-family: monospace; color: #38bdf8; font-weight: bold; }
-        .token-badge-in { background-color: #1e3a8a; color: #60a5fa; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .token-badge-out { background-color: #064e3b; color: #34d399; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        
+
         .terminal-box { background-color: #020617; border: 1px solid #1e293b; border-radius: 6px; padding: 1.25rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #34d399; height: 160px; overflow-y: auto; line-height: 1.5; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8); }
+
+        .run-input { width: 100%; padding: 10px; margin: 6px 0 14px 0; background: #0f172a; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; box-sizing: border-box; }
+        .run-btn { padding: 10px 22px; background: #0ea5e9; color: #ffffff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .run-btn:disabled { background: #475569; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -168,8 +161,10 @@
 
     <div class="welcome-card">
         <h2>Welcome to your Panel, <span id="welcome-name">User</span>!</h2>
-        <p style="color: #94a3b8;">Your authentication flow is verified and active. Real-time evaluation pipeline sync is enabled.</p>
+        <p style="color: #94a3b8;">Your login is verified. Every number below is read from the evaluation database.</p>
     </div>
+
+    <div class="banner" id="status-banner"></div>
 
     <!-- Core Dynamic Cards -->
     <div class="stats-grid">
@@ -178,114 +173,69 @@
         <div class="stat-card" style="border-left-color: #a78bfa;"><h3>Active Pipelines</h3> <p id="metric-pipelines">0</p></div>
     </div>
 
-    <!-- REPOSITORY AND CI/CD LAYERS -->
+    <!-- PROJECT INFO AND RUN RESULTS -->
     <div class="two-col-grid">
         <div class="repo-card">
-            <h3>Repository Analytics UI</h3>
+            <h3>Project Info</h3>
             <div class="repo-meta-list">
-                <div class="repo-meta-item"><span class="repo-meta-label">Connected Repository</span><span class="repo-meta-value" id="repo-name">llm-eval-cicd-pipeline</span></div>
-                <div class="repo-meta-item"><span class="repo-meta-label">Active Git Branch</span><span class="repo-meta-value" id="repo-branch">main</span></div>
-                <div class="repo-meta-item"><span class="repo-meta-label">Open Pull Requests</span><span class="repo-meta-value" style="color: #fbbf24;" id="repo-prs">0</span></div>
-                <div class="repo-meta-item"><span class="repo-meta-label">Total Sync Commits</span><span class="repo-meta-value" id="repo-commits">12</span></div>
+                <div class="repo-meta-item"><span class="repo-meta-label">Repository</span><span class="repo-meta-value">llm-eval-cicd-pipeline</span></div>
+                <div class="repo-meta-item"><span class="repo-meta-label">Branch</span><span class="repo-meta-value">main</span></div>
+                <div class="repo-meta-item"><span class="repo-meta-label">Runs Logged</span><span class="repo-meta-value" id="info-runs">0</span></div>
+                <div class="repo-meta-item"><span class="repo-meta-label">Models Evaluated</span><span class="repo-meta-value" id="info-models">0</span></div>
             </div>
         </div>
-        <div class="cicd-card">
-            <h3>GitHub Actions CI/CD Pipeline</h3>
+        <div class="results-card">
+            <h3>Run Results (Pass mark: 90%)</h3>
             <table class="standard-table">
-                <thead><tr><th>Workflow Job</th><th>Triggered By</th><th>Live Status</th></tr></thead>
-                <tbody id="cicd-workflow-body"><tr><td colspan="3" style="color:#94a3b8; text-align:center;">Loading CI/CD runs...</td></tr></tbody>
+                <thead><tr><th>Result</th><th>Value</th></tr></thead>
+                <tbody id="results-body"><tr><td colspan="2" style="color:#94a3b8;">No evaluations run yet.</td></tr></tbody>
             </table>
         </div>
     </div>
 
-    <!-- EXPLICIT VISUALIZATION MATRIX -->
+    <!-- SCORE TABLES -->
     <div class="two-col-grid">
         <div class="geval-card">
-            <h3>G-Eval Framework (NLP Criteria Metrics)</h3>
+            <h3>Quality Scores (Latest Run)</h3>
             <table class="standard-table">
-                <thead><tr><th>Evaluation Param</th><th>CoT Score</th><th>LLM Reason / Verdict</th></tr></thead>
+                <thead><tr><th>Check</th><th>Score</th><th>Verdict</th></tr></thead>
                 <tbody id="geval-metrics-body"><tr><td colspan="3" style="color:#94a3b8;">No evaluations run yet.</td></tr></tbody>
             </table>
         </div>
         <div class="hallucination-card">
-            <h3>Hallucination, Faithfulness & Relevance</h3>
+            <h3>Faithfulness &amp; Conciseness (Latest Run)</h3>
             <table class="standard-table">
-                <thead><tr><th>Target Pipeline</th><th>Faithfulness</th><th>Answer Relevance</th><th>Status</th></tr></thead>
+                <thead><tr><th>Pipeline</th><th>Faithfulness</th><th>Conciseness</th><th>Status</th></tr></thead>
                 <tbody id="hallucination-metrics-body"><tr><td colspan="4" style="color:#94a3b8;">No evaluations run yet.</td></tr></tbody>
             </table>
+            <p class="note">Faithfulness is judged by Gemini (LLM-as-a-judge) against your ground truth. If the judge is unavailable, a word-overlap check is used instead. Conciseness, coherence and safety are simple rule-based checks.</p>
         </div>
     </div>
 
-    <!-- OBSERVABILITY TRACING SYSTEM -->
-    <div class="three-col-grid">
-        <div class="trace-node-card">
-            <h3>Component-Level Tracing</h3>
-            <div class="trace-tree" id="tracing-tree-body"><p style="color:#94a3b8;">No trace nodes captured.</p></div>
-        </div>
-        <div class="sdk-sync-card">
-            <h3>Langfuse Integration</h3>
-            <table class="standard-table">
-                <thead><tr><th>Trace Parameter</th><th>Value State</th></tr></thead>
-                <tbody id="langfuse-tbody">
-                    <tr><td>SDK Status</td><td><span class="status-pill status-running">Pending</span></td></tr>
-                    <tr><td>Total Synced Spans</td><td style="font-family: monospace; color:#38bdf8; font-weight:bold;">0 Spans</td></tr>
-                    <tr><td>API Latency (Trace)</td><td style="color: #34d399; font-weight:bold;">--</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="sdk-sync-card" style="border-left-width: 4px; border-left-color:#a78bfa;">
-            <h3>Phoenix Integration</h3>
-            <table class="standard-table">
-                <thead><tr><th>Collector Node</th><th>Status State</th></tr></thead>
-                <tbody id="phoenix-tbody">
-                    <tr><td>Telemetry Endpoint</td><td style="font-family: monospace; color:#94a3b8;">--</td></tr>
-                    <tr><td>Inference Captures</td><td style="font-family: monospace; color:#38bdf8; font-weight:bold;">0 Captured</td></tr>
-                    <tr><td>Active Session Ring</td><td><span class="status-pill status-running">Offline</span></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- QUALITY GATES & DEPLOYMENT INFRA -->
+    <!-- QUALITY GATES & STATUS -->
     <div class="two-col-grid">
         <div class="qgate-card">
-            <h3>Enterprise Quality Gates</h3>
+            <h3>Quality Gates (Latest Run)</h3>
             <table class="standard-table">
-                <thead>
-                    <tr>
-                        <th>Assertion Rule ID</th>
-                        <th>Threshold Condition</th>
-                        <th>Gate Verdict</th>
-                    </tr>
-                </thead>
-                <tbody id="qgate-body">
-                    <tr><td>min-accuracy-guard</td><td class="gate-condition">Accuracy >= 90.0%</td><td><span class="status-pill status-running">Waiting Run</span></td></tr>
-                    <tr><td>max-hallucination-limit</td><td class="gate-condition">Hallucination <= 5.0%</td><td><span class="status-pill status-running">Waiting Run</span></td></tr>
-                    <tr><td>max-latency-ceiling</td><td class="gate-condition">Latency <= 350ms</td><td><span class="status-pill status-running">Waiting Run</span></td></tr>
-                </tbody>
+                <thead><tr><th>Rule</th><th>Condition</th><th>Value</th><th>Verdict</th></tr></thead>
+                <tbody id="qgate-body"><tr><td colspan="4" style="color:#94a3b8;">No evaluations run yet.</td></tr></tbody>
             </table>
         </div>
 
-        <div class="cloud-card" style="border-right-width: 4px; border-right-color:#34d399;">
-            <h3>Cloud Deployment & Infrastructure</h3>
+        <div class="cloud-card">
+            <h3>System Status</h3>
             <table class="standard-table">
-                <thead>
-                    <tr>
-                        <th>Infrastructure Asset</th>
-                        <th>Target Route Link</th>
-                        <th>Network Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Frontend Deployment</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Vercel Edge Host</td><td><span class="status-pill status-success">Live</span></td></tr>
-                    <tr><td>Backend Service Host</td><td style="font-family: monospace; font-size:0.8rem; color:#94a3b8;">Render Cloud Gateway</td><td><span class="status-pill status-success">Healthy</span></td></tr>
-                    <tr><td>Database Cluster</td><td style="font-family: monospace; font-size:0.8rem; color:#f59e0b;">Supabase PostgreSQL</td><td style="color:#34d399; font-weight:bold; font-family:monospace;">Connected</td></tr>
+                <thead><tr><th>Part</th><th>Where</th><th>Status</th></tr></thead>
+                <tbody id="status-body">
+                    <tr><td>Frontend</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Vercel</td><td><span class="status-pill status-success">Live</span></td></tr>
+                    <tr><td>Backend</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Render</td><td><span class="status-pill status-running">Checking</span></td></tr>
+                    <tr><td>Database</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Supabase</td><td><span class="status-pill status-running">Checking</span></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- CHART METRICS & COMMIT TIMELINE -->
+    <!-- CHART METRICS & HISTORY -->
     <div class="analytics-grid">
         <div class="chart-card">
             <h3>Performance Trends (Historical Accuracy)</h3>
@@ -293,59 +243,34 @@
                 <canvas id="historicalTrendsChart"></canvas>
             </div>
         </div>
-        <div class="timeline-card"><h3>Commit History Timeline</h3><div class="timeline-container" id="timeline-container"><p style="color:#94a3b8;">No evaluation runs available.</p></div></div>
+        <div class="timeline-card"><h3>Evaluation History</h3><div class="timeline-container" id="timeline-container"><p style="color:#94a3b8;">No evaluation runs available.</p></div></div>
     </div>
+
     <!-- RUN EVALUATION -->
     <div class="comparison-card">
-        <h3>Run New Evaluation</h3>
+        <h3 style="margin-top:0; color:#38bdf8;">Run New Evaluation</h3>
         <label style="color:#94a3b8;">Prompt</label>
-        <input type="text" id="run-eval-prompt" value="What is the capital of France?" style="width:100%; padding:10px; margin:6px 0 14px 0; background:#0f172a; color:#e2e8f0; border:1px solid #334155; border-radius:6px; box-sizing:border-box;">
+        <input type="text" id="run-eval-prompt" class="run-input" value="What is the capital of France?">
         <label style="color:#94a3b8;">Ground Truth (correct answer)</label>
-        <input type="text" id="run-eval-truth" value="The capital of France is Paris." style="width:100%; padding:10px; margin:6px 0 14px 0; background:#0f172a; color:#e2e8f0; border:1px solid #334155; border-radius:6px; box-sizing:border-box;">
-        <button id="run-eval-btn" onclick="runNewEvaluation()" style="padding:10px 22px; background:#0ea5e9; color:#ffffff; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Run Evaluation</button>
+        <input type="text" id="run-eval-truth" class="run-input" value="The capital of France is Paris.">
+        <button id="run-eval-btn" class="run-btn">Run Evaluation</button>
         <p id="run-eval-status" style="color:#94a3b8; margin-top:12px;"></p>
     </div>
-    <script>
-    async function runNewEvaluation() {
-        var btn = document.getElementById('run-eval-btn');
-        var status = document.getElementById('run-eval-status');
-        var prompt = document.getElementById('run-eval-prompt').value.trim();
-        var truth = document.getElementById('run-eval-truth').value.trim();
-        if (!prompt) { status.textContent = 'Please enter a prompt.'; return; }
-        btn.disabled = true;
-        status.textContent = 'Running... first run can take up to 50 seconds (free server waking up).';
-        try {
-            var res = await fetch('https://llm-eval-backend-v2.onrender.com/api/eval/run', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt, groundTruth: truth })
-            });
-            var data = await res.json();
-            if (!data.success) {
-                status.textContent = 'Failed: ' + (data.error || 'Unknown error');
-            } else {
-                status.textContent = 'Verdict: ' + data.verdict + ' | Accuracy: ' + data.accuracy + '% | Model: ' + data.model + ' | Answer: ' + data.output + ' | Refresh the page to see it in the charts.';
-            }
-        } catch (e) {
-            status.textContent = 'Network error: ' + e.message;
-        }
-        btn.disabled = false;
-    }
-    </script>
+
     <!-- PIPELINE COMPARISON SYSTEM -->
     <div class="comparison-card">
-        <h3>Side-by-Side Pipeline Comparison System</h3>
+        <h3 style="margin-top:0; color:#38bdf8;">Side-by-Side Model Comparison</h3>
         <div class="selector-row">
             <div class="selector-group">
-                <label>Select Pipeline / Model A</label>
-                <select id="model-a-selector" onchange="runPipelineComparison()"></select>
+                <label>Select Model A</label>
+                <select id="model-a-selector"></select>
             </div>
             <div class="selector-group">
-                <label>Select Pipeline / Model B</label>
-                <select id="model-b-selector" onchange="runPipelineComparison()"></select>
+                <label>Select Model B</label>
+                <select id="model-b-selector"></select>
             </div>
         </div>
-        <table class="standard-table" style="display:none;">
+        <table class="standard-table" id="comparison-table" style="display:none;">
             <thead><tr><th>Evaluation Metric</th><th id="table-header-model-a">Model A</th><th id="table-header-model-b">Model B</th></tr></thead>
             <tbody>
                 <tr><td class="metric-name">Average Accuracy Rate</td><td id="comp-accuracy-a">0%</td><td id="comp-accuracy-b">0%</td></tr>
@@ -355,25 +280,27 @@
         <p id="comparison-empty-state" style="color:#94a3b8; margin-top:1rem;">No evaluation data available in database for comparison.</p>
     </div>
 
-    <!-- PROMPT BREAKDOWN METRICS MATRIX -->
-    <div class="prompt-card">
-        <h3>Detailed Prompt Breakdown Analytics</h3>
-        <table class="standard-table">
-            <thead><tr><th>Prompt Template ID</th><th>Target Version</th><th>Avg Input Tokens</th><th>Avg Output Tokens</th><th>Success Evaluation Rate</th></tr></thead>
-            <tbody id="prompt-matrix-body"><tr><td colspan="5" style="color:#94a3b8;">No active prompt evaluation logs recorded.</td></tr></tbody>
-        </table>
-    </div>
-
-    <!-- ASYNCHRONOUS LIVE TERMINAL ENGINE -->
+    <!-- RECENT LOG -->
     <div class="terminal-card">
-        <h3>Real-time Live Evaluation Log Stream</h3>
-        <div class="terminal-box" id="terminal-console"><div style="color:#94a3b8;">[LOG ENGINE] Connecting to live backend stream...</div></div>
+        <h3 style="margin-top:0; color:#38bdf8;">Recent Evaluation Log</h3>
+        <div class="terminal-box" id="terminal-console"><div style="color:#94a3b8;">Loading...</div></div>
     </div>
 </div>
 
 <script>
 if (!localStorage.getItem('supabase_auth_token')) {
     window.location.href = '../authentication/Login.html';
+}
+
+const PASS_MARK = 90;
+const BACKEND_URL = 'https://llm-eval-backend-v2.onrender.com';
+
+function esc(value) {
+    return String(value === undefined || value === null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 }
 
 const savedUserInfo = localStorage.getItem('user_info');
@@ -391,23 +318,50 @@ document.getElementById('prof-verified').innerText = userInfo.lastLogin ? new Da
 document.getElementById('welcome-name').innerText = userInfo.username || 'Unknown User';
 document.getElementById('session-badge').innerText = `Session: ${userInfo.sessionStatus || 'Active'}`;
 
-const BACKEND_URL = 'https://llm-eval-backend-v2.onrender.com';
-
-let evaluationDetailsCache = { gEvalMetrics: [], hallucinationTable: [], performanceTrend: [], modelComparison: [], repoAnalytics: {}, githubActions: [], promptBreakdown: [] };
-
-// Initialize Real API Sync Pipeline
-fetchPipelineMetrics(BACKEND_URL);
-fetchEvaluationDetails(BACKEND_URL);
+const emptyDetails = { gEvalMetrics: [], hallucinationTable: [], performanceTrend: [], modelComparison: [] };
+let evaluationDetailsCache = Object.assign({}, emptyDetails);
+let backendReachable = null;
+let historicalChartInstance = null;
 
 document.getElementById('logout-button').addEventListener('click', () => {
     localStorage.clear();
     sessionStorage.clear();
     window.location.href = '../authentication/Login.html';
 });
+document.getElementById('run-eval-btn').addEventListener('click', runNewEvaluation);
+document.getElementById('model-a-selector').addEventListener('change', runPipelineComparison);
+document.getElementById('model-b-selector').addEventListener('change', runPipelineComparison);
 
-async function fetchPipelineMetrics(backendUrl) {
+function showBanner(text, isError) {
+    const b = document.getElementById('status-banner');
+    b.className = 'banner' + (isError ? ' error' : '');
+    b.innerText = text;
+    b.style.display = 'block';
+}
+function hideBanner() {
+    document.getElementById('status-banner').style.display = 'none';
+}
+
+async function loadDashboard() {
+    // Free-tier backend sleeps when idle. Tell the user if it is slow.
+    const wakeTimer = setTimeout(() => {
+        showBanner('Backend server is waking up (free tier). This can take up to 50 seconds. Please wait...', false);
+    }, 3000);
+
+    await Promise.all([fetchPipelineMetrics(), fetchEvaluationDetails()]);
+
+    clearTimeout(wakeTimer);
+    if (backendReachable) {
+        hideBanner();
+    } else {
+        showBanner('Could not reach the backend. Please refresh in a minute.', true);
+    }
+    renderAll();
+}
+
+async function fetchPipelineMetrics() {
     try {
-        const response = await fetch(`${backendUrl}/api/dashboard/metrics`);
+        const response = await fetch(`${BACKEND_URL}/api/dashboard/metrics`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
@@ -416,188 +370,171 @@ async function fetchPipelineMetrics(backendUrl) {
         document.getElementById('metric-pipelines').innerText = data.active_pipelines ?? 0;
     } catch (err) {
         console.error('[DASHBOARD] Live metrics fetch failed:', err.message);
-        document.getElementById('metric-total').innerText = "0";
-        document.getElementById('metric-accuracy').innerText = "0.0%";
-        document.getElementById('metric-pipelines').innerText = "0";
+        document.getElementById('metric-total').innerText = '0';
+        document.getElementById('metric-accuracy').innerText = '0.0%';
+        document.getElementById('metric-pipelines').innerText = '0';
     }
 }
 
-async function fetchEvaluationDetails(backendUrl) {
+async function fetchEvaluationDetails() {
     try {
-        const response = await fetch(`${backendUrl}/api/dashboard/evaluation-details`);
+        const response = await fetch(`${BACKEND_URL}/api/dashboard/evaluation-details`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         evaluationDetailsCache = await response.json();
+        backendReachable = true;
     } catch (err) {
         console.error('[DASHBOARD] Evaluation details fetch failed:', err.message);
-        evaluationDetailsCache = { 
-            gEvalMetrics: [], 
-            hallucinationTable: [], 
-            performanceTrend: [], 
-            modelComparison: [],
-            repoAnalytics: {},
-            githubActions: [],
-            promptBreakdown: []
-        };
+        evaluationDetailsCache = Object.assign({}, emptyDetails);
+        backendReachable = false;
     }
-    renderAIEvaluationMetrics();
-    renderCicdAndRepoUI();
-    renderComponentTracingTree();
-    renderPromptBreakdownMetrics();
-    initializeHistoricalAnalytics();
-    populateComparisonSelectors();
-    updateTerminalLogs();
 }
 
-function renderCicdAndRepoUI() {
-    const tableBody = document.getElementById('cicd-workflow-body');
-    const repo = evaluationDetailsCache.repoAnalytics || {};
-    const ghActions = evaluationDetailsCache.githubActions || [];
+function renderAll() {
+    renderProjectInfoAndResults();
+    renderAIEvaluationMetrics();
+    renderQualityGates();
+    renderSystemStatus();
+    initializeHistoricalAnalytics();
+    populateComparisonSelectors();
+    renderLog();
+}
 
-    if (document.getElementById('repo-prs')) document.getElementById('repo-prs').innerText = repo.open_prs ?? 0;
-    if (document.getElementById('repo-commits')) document.getElementById('repo-commits').innerText = repo.total_commits ?? (evaluationDetailsCache.performanceTrend?.length ? evaluationDetailsCache.performanceTrend.length + 12 : 12);
+function getTrend() {
+    return evaluationDetailsCache.performanceTrend || [];
+}
 
-    if (tableBody) {
-        tableBody.innerHTML = '';
-        if (ghActions.length === 0) {
-            tableBody.innerHTML = `
-                <tr>
-                    <td style="font-family: monospace; font-weight: 600;">llm-eval-ci-suite.yml</td>
-                    <td style="color: #94a3b8;">push (main)</td>
-                    <td><span class="status-pill status-success">COMPLETED</span></td>
-                </tr>`;
-        } else {
-            ghActions.forEach(row => {
-                tableBody.insertAdjacentHTML('beforeend', `
-                    <tr>
-                        <td style="font-family: monospace; font-weight: 600;">${row.workflow_job || row.job || 'llm-eval-ci-suite.yml'}</td>
-                        <td style="color: #94a3b8;">${row.triggered_by || row.actor || 'push (main)'}</td>
-                        <td><span class="status-pill status-success">${row.status || 'COMPLETED'}</span></td>
-                    </tr>
-                `);
-            });
-        }
+function renderProjectInfoAndResults() {
+    const trend = getTrend();
+    document.getElementById('info-runs').innerText = trend.length;
+    document.getElementById('info-models').innerText = (evaluationDetailsCache.modelComparison || []).length;
+
+    const body = document.getElementById('results-body');
+    if (trend.length === 0) {
+        body.innerHTML = '<tr><td colspan="2" style="color:#94a3b8;">No evaluations run yet.</td></tr>';
+        return;
     }
+    const passed = trend.filter(t => Number(t.accuracy) >= PASS_MARK).length;
+    const failed = trend.length - passed;
+    const rate = ((passed / trend.length) * 100).toFixed(1);
+    const latest = trend[trend.length - 1];
+    const latestPass = Number(latest.accuracy) >= PASS_MARK;
+
+    body.innerHTML = `
+        <tr><td>Total runs</td><td style="font-weight:bold;">${trend.length}</td></tr>
+        <tr><td>Passed</td><td style="color:#34d399; font-weight:bold;">${passed}</td></tr>
+        <tr><td>Failed</td><td style="color:#f87171; font-weight:bold;">${failed}</td></tr>
+        <tr><td>Success rate</td><td style="color:#38bdf8; font-weight:bold;">${rate}%</td></tr>
+        <tr><td>Latest run</td><td><span class="status-pill ${latestPass ? 'status-success' : 'status-failed'}">${latestPass ? 'Passed' : 'Failed'} (${esc(latest.accuracy)}%)</span></td></tr>`;
 }
 
 function renderAIEvaluationMetrics() {
     try {
         const gevalBody = document.getElementById('geval-metrics-body');
-        if (gevalBody) {
-            gevalBody.innerHTML = '';
-            const rows = evaluationDetailsCache.gEvalMetrics || [];
-            if (rows.length === 0) {
-                gevalBody.insertAdjacentHTML('beforeend', `<tr><td colspan="3" style="color:#94a3b8;">No evaluations run in database yet.</td></tr>`);
-            } else {
-                rows.forEach(row => {
-                    const state = row.score >= 0.9 ? 'score-high' : (row.score >= 0.6 ? 'score-med' : 'score-low');
-                    gevalBody.insertAdjacentHTML('beforeend', `
-                        <tr>
-                            <td style="font-weight: 600; color: #f8fafc;">${row.criteria}</td>
-                            <td><span class="eval-score-badge ${state}">${Number(row.score).toFixed(2)}</span></td>
-                            <td><span style="color: #e2e8f0;">${row.verdict || ''}</span><span class="reasoning-text">${row.text || ''}</span></td>
-                        </tr>
-                    `);
-                });
-            }
+        const gRows = evaluationDetailsCache.gEvalMetrics || [];
+        if (gRows.length === 0) {
+            gevalBody.innerHTML = '<tr><td colspan="3" style="color:#94a3b8;">No evaluations run in database yet.</td></tr>';
+        } else {
+            gevalBody.innerHTML = gRows.map(row => {
+                const score = Number(row.score);
+                const state = score >= 0.9 ? 'score-high' : (score >= 0.6 ? 'score-med' : 'score-low');
+                const scoreText = isNaN(score) ? 'N/A' : score.toFixed(2);
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: #f8fafc;">${esc(row.criteria)}</td>
+                        <td><span class="eval-score-badge ${state}">${scoreText}</span></td>
+                        <td><span style="color: #e2e8f0;">${esc(row.verdict)}</span><span class="reasoning-text">${esc(row.text)}</span></td>
+                    </tr>`;
+            }).join('');
         }
 
         const hallBody = document.getElementById('hallucination-metrics-body');
-        if (hallBody) {
-            hallBody.innerHTML = '';
-            const rows = evaluationDetailsCache.hallucinationTable || [];
-            if (rows.length === 0) {
-                hallBody.insertAdjacentHTML('beforeend', `<tr><td colspan="4" style="color:#94a3b8;">No evaluations run in database yet.</td></tr>`);
-            } else {
-                rows.forEach(row => {
-                    const pill = row.status === 'Passed' ? 'status-success' : 'status-failed';
-                    hallBody.insertAdjacentHTML('beforeend', `
-                        <tr>
-                            <td style="font-family: monospace; font-weight: 600; color: #38bdf8;">${row.target}</td>
-                            <td style="color: #34d399; font-weight: bold;">${row.faithfulness}</td>
-                            <td style="color: #a78bfa; font-weight: bold;">${row.answerRelevance}</td>
-                            <td><span class="status-pill ${pill}">${row.status}</span></td>
-                        </tr>
-                    `);
-                });
-            }
+        const hRows = evaluationDetailsCache.hallucinationTable || [];
+        if (hRows.length === 0) {
+            hallBody.innerHTML = '<tr><td colspan="4" style="color:#94a3b8;">No evaluations run in database yet.</td></tr>';
+        } else {
+            hallBody.innerHTML = hRows.map(row => {
+                const pill = row.status === 'Passed' ? 'status-success' : 'status-failed';
+                return `
+                    <tr>
+                        <td style="font-family: monospace; font-weight: 600; color: #38bdf8;">${esc(row.target)}</td>
+                        <td style="color: #34d399; font-weight: bold;">${esc(row.faithfulness)}</td>
+                        <td style="color: #a78bfa; font-weight: bold;">${esc(row.answerRelevance)}</td>
+                        <td><span class="status-pill ${pill}">${esc(row.status)}</span></td>
+                    </tr>`;
+            }).join('');
         }
     } catch (err) { console.error(err); }
 }
 
-function renderComponentTracingTree() {
-    const treeContainer = document.getElementById('tracing-tree-body');
-    if (!treeContainer) return;
-
-    const hasData = evaluationDetailsCache.performanceTrend && evaluationDetailsCache.performanceTrend.length > 0;
-    
-    if (hasData) {
-        treeContainer.innerHTML = `
-            <div class="trace-step">
-                <div class="trace-info"><span class="trace-name">Input Prompt Validation & Guard</span><span class="trace-duration">Latency: 12ms</span></div>
-                <span class="status-pill status-success">SUCCESS</span>
-            </div>
-            <div class="trace-step">
-                <div class="trace-info"><span class="trace-name">Multi-LLM Model Router Engine</span><span class="trace-duration">Latency: 145ms</span></div>
-                <span class="status-pill status-success">SUCCESS</span>
-            </div>
-            <div class="trace-step">
-                <div class="trace-info"><span class="trace-name">G-Eval & Ragas Evaluator Agent</span><span class="trace-duration">Latency: 88ms</span></div>
-                <span class="status-pill status-success">SUCCESS</span>
-            </div>
-            <div class="trace-step">
-                <div class="trace-info"><span class="trace-name">Quality Gate Assertion Checker</span><span class="trace-duration">Latency: 15ms</span></div>
-                <span class="status-pill status-success">SUCCESS</span>
-            </div>`;
-
-        const langfuseBody = document.getElementById('langfuse-tbody');
-        if (langfuseBody) {
-            langfuseBody.innerHTML = `
-                <tr><td>SDK Status</td><td><span class="status-pill status-failed">DISCONNECTED</span></td></tr>
-                <tr><td>Total Synced Spans</td><td style="color: #38bdf8; font-weight: bold;">0 Spans</td></tr>
-                <tr><td>API Latency (Trace)</td><td style="color: #34d399; font-weight: bold;">42ms</td></tr>`;
-        }
-
-        const phoenixBody = document.getElementById('phoenix-tbody');
-        if (phoenixBody) {
-            phoenixBody.innerHTML = `
-                <tr><td>Collector Node</td><td style="font-family: monospace; color: #94a3b8;">http://localhost:6006</td></tr>
-                <tr><td>Inference Captures</td><td style="color: #38bdf8; font-weight: bold;">0 Captured</td></tr>
-                <tr><td>Active Session Ring</td><td><span class="status-pill status-failed">LIVE LISTENING</span></td></tr>`;
-        }
-
-        const qgateBody = document.getElementById('qgate-body');
-        if (qgateBody) {
-            qgateBody.innerHTML = `
-                <tr><td>min-accuracy-guard</td><td class="gate-condition">Accuracy >= 90.0%</td><td><span class="status-pill status-success">PASSED</span></td></tr>
-                <tr><td>max-hallucination-limit</td><td class="gate-condition">Hallucination <= 5.0%</td><td><span class="status-pill status-success">PASSED</span></td></tr>
-                <tr><td>max-latency-ceiling</td><td class="gate-condition">Latency <= 350ms</td><td><span class="status-pill status-success">PASSED</span></td></tr>`;
-        }
-    } else {
-        treeContainer.innerHTML = `<p style="color:#94a3b8;">No dynamic tracing spans recorded.</p>`;
+function renderQualityGates() {
+    const body = document.getElementById('qgate-body');
+    const trend = getTrend();
+    if (trend.length === 0) {
+        body.innerHTML = '<tr><td colspan="4" style="color:#94a3b8;">No evaluations run yet.</td></tr>';
+        return;
     }
+
+    const latestAcc = Number(trend[trend.length - 1].accuracy);
+    const accPass = latestAcc >= PASS_MARK;
+
+    const hall = (evaluationDetailsCache.hallucinationTable || [])[0];
+    const faith = hall ? Number(hall.faithfulness) : NaN;
+    let hallRow;
+    if (isFinite(faith)) {
+        const hallucination = (1 - faith) * 100;
+        const hallPass = hallucination <= 5;
+        hallRow = `<tr><td>max-hallucination-limit</td><td class="gate-condition">Hallucination &lt;= 5.0%</td><td>${hallucination.toFixed(1)}%</td><td><span class="status-pill ${hallPass ? 'status-success' : 'status-failed'}">${hallPass ? 'Passed' : 'Failed'}</span></td></tr>`;
+    } else {
+        hallRow = `<tr><td>max-hallucination-limit</td><td class="gate-condition">Hallucination &lt;= 5.0%</td><td>N/A</td><td><span class="status-pill status-running">No ground truth</span></td></tr>`;
+    }
+
+    body.innerHTML = `
+        <tr><td>min-accuracy-guard</td><td class="gate-condition">Accuracy &gt;= ${PASS_MARK}.0%</td><td>${isNaN(latestAcc) ? 'N/A' : latestAcc.toFixed(1) + '%'}</td><td><span class="status-pill ${accPass ? 'status-success' : 'status-failed'}">${accPass ? 'Passed' : 'Failed'}</span></td></tr>
+        ${hallRow}`;
 }
 
-let historicalChartInstance = null;
+function renderSystemStatus() {
+    const body = document.getElementById('status-body');
+    const hasData = getTrend().length > 0;
+    let backendPill;
+    let dbPill;
+    if (backendReachable === true) {
+        backendPill = '<span class="status-pill status-success">Reachable</span>';
+        dbPill = hasData
+            ? '<span class="status-pill status-success">Returning data</span>'
+            : '<span class="status-pill status-running">No data yet</span>';
+    } else {
+        backendPill = '<span class="status-pill status-failed">Unreachable</span>';
+        dbPill = '<span class="status-pill status-running">Unknown</span>';
+    }
+    body.innerHTML = `
+        <tr><td>Frontend</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Vercel</td><td><span class="status-pill status-success">Live</span></td></tr>
+        <tr><td>Backend</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Render</td><td>${backendPill}</td></tr>
+        <tr><td>Database</td><td style="font-family: monospace; font-size:0.8rem; color:#38bdf8;">Supabase</td><td>${dbPill}</td></tr>`;
+}
 
 function initializeHistoricalAnalytics() {
-    let trend = evaluationDetailsCache.performanceTrend || [];
+    const trend = getTrend();
     const chartCanvas = document.getElementById('historicalTrendsChart');
-    const chartCard = chartCanvas ? chartCanvas.closest('.chart-card') : null;
+    const timelineContainer = document.getElementById('timeline-container');
+
+    if (historicalChartInstance) {
+        historicalChartInstance.destroy();
+        historicalChartInstance = null;
+    }
 
     if (trend.length === 0) {
+        const chartCard = chartCanvas ? chartCanvas.closest('.chart-card') : null;
         if (chartCard) {
             chartCard.innerHTML = '<h3>Performance Trends (Historical Accuracy)</h3><p style="color:#94a3b8;">No evaluation runs available yet.</p>';
         }
-        const timelineContainer = document.getElementById('timeline-container');
         if (timelineContainer) {
             timelineContainer.innerHTML = '<p style="color:#94a3b8;">No evaluation runs available.</p>';
         }
         return;
     }
 
-    const ctx = document.getElementById('historicalTrendsChart').getContext('2d');
-    if (historicalChartInstance) historicalChartInstance.destroy();
-    
+    const ctx = chartCanvas.getContext('2d');
     historicalChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -613,56 +550,47 @@ function initializeHistoricalAnalytics() {
                 pointBackgroundColor: '#34d399',
                 pointBorderColor: '#0f172a',
                 pointBorderWidth: 2,
-                tension: 0.4,
+                tension: 0,
                 fill: true
             }]
         },
-        options: { 
-            responsive: true, 
+        options: {
+            responsive: true,
             maintainAspectRatio: false,
-            layout: {
-                padding: { left: 10, right: 20, top: 10, bottom: 10 }
-            },
+            layout: { padding: { left: 10, right: 20, top: 10, bottom: 10 } },
             scales: {
                 x: {
-                    ticks: { 
-                        color: '#f8fafc', 
-                        font: { size: 12, weight: 'bold', family: 'Segoe UI' } 
-                    },
+                    ticks: { color: '#f8fafc', font: { size: 12, weight: 'bold', family: 'Segoe UI' } },
                     grid: { color: 'rgba(255, 255, 255, 0.08)' }
                 },
                 y: {
-                            min: 0,
+                    min: 0,
                     max: 100,
-                    ticks: { 
-                        stepSize: 5, // Clean 5% gaps (80%, 85%, 90%, 95%, 100%)
-                        color: '#f8fafc', 
+                    ticks: {
+                        stepSize: 10,
+                        color: '#f8fafc',
                         font: { size: 12, weight: 'bold', family: 'Segoe UI' },
-                        callback: value => value + '%' 
+                        callback: value => value + '%'
                     },
                     grid: { color: 'rgba(255, 255, 255, 0.08)' }
                 }
             },
             plugins: {
-                legend: {
-                    labels: { color: '#f8fafc', font: { size: 12, weight: 'bold' } }
-                }
+                legend: { labels: { color: '#f8fafc', font: { size: 12, weight: 'bold' } } }
             }
         }
     });
 
-    const timelineContainer = document.getElementById('timeline-container');
-    if(timelineContainer) {
-        timelineContainer.innerHTML = '';
-        trend.slice().reverse().forEach(item => {
-            timelineContainer.insertAdjacentHTML('beforeend', `
-                <div class="timeline-item">
-                    <div class="timeline-commit">Evaluation Run</div>
-                    <div class="timeline-meta">Evaluated on: ${item.date}</div>
-                    <div class="timeline-metrics">Accuracy: ${item.accuracy}%</div>
-                </div>
-            `);
-        });
+    if (timelineContainer) {
+        timelineContainer.innerHTML = trend.slice().reverse().map(item => {
+            const pass = Number(item.accuracy) >= PASS_MARK;
+            return `
+                <div class="timeline-item ${pass ? '' : 'fail'}">
+                    <div class="timeline-commit">Evaluation Run (${pass ? 'Passed' : 'Failed'})</div>
+                    <div class="timeline-meta">Evaluated on: ${esc(item.date)}</div>
+                    <div class="timeline-metrics">Accuracy: ${esc(item.accuracy)}%</div>
+                </div>`;
+        }).join('');
     }
 }
 
@@ -671,23 +599,23 @@ function populateComparisonSelectors() {
     const selA = document.getElementById('model-a-selector');
     const selB = document.getElementById('model-b-selector');
     const emptyState = document.getElementById('comparison-empty-state');
-    const table = document.querySelector('.comparison-card .standard-table');
+    const table = document.getElementById('comparison-table');
 
     if (models.length === 0) {
-        if(selA) selA.innerHTML = '';
-        if(selB) selB.innerHTML = '';
-        if(table) table.style.display = 'none';
-        if (emptyState) emptyState.style.display = 'block';
+        selA.innerHTML = '';
+        selB.innerHTML = '';
+        table.style.display = 'none';
+        emptyState.style.display = 'block';
         return;
     }
 
-    if(table) table.style.display = '';
-    if (emptyState) emptyState.style.display = 'none';
+    table.style.display = '';
+    emptyState.style.display = 'none';
 
-    const optionsHtml = models.map(m => `<option value="${m.model}">${m.model}</option>`).join('');
-    if(selA) selA.innerHTML = optionsHtml;
-    if(selB) selB.innerHTML = optionsHtml;
-    if (models.length > 1 && selB) selB.selectedIndex = 1;
+    const optionsHtml = models.map(m => `<option value="${esc(m.model)}">${esc(m.model)}</option>`).join('');
+    selA.innerHTML = optionsHtml;
+    selB.innerHTML = optionsHtml;
+    if (models.length > 1) selB.selectedIndex = 1;
 
     runPipelineComparison();
 }
@@ -696,69 +624,67 @@ function runPipelineComparison() {
     const models = evaluationDetailsCache.modelComparison || [];
     if (models.length === 0) return;
 
-    const modelAName = document.getElementById('model-a-selector').value;
-    const modelBName = document.getElementById('model-b-selector').value;
-    const dataA = models.find(m => m.model === modelAName);
-    const dataB = models.find(m => m.model === modelBName);
+    const dataA = models.find(m => m.model === document.getElementById('model-a-selector').value);
+    const dataB = models.find(m => m.model === document.getElementById('model-b-selector').value);
     if (!dataA || !dataB) return;
 
     document.getElementById('table-header-model-a').innerText = dataA.model;
     document.getElementById('table-header-model-b').innerText = dataB.model;
-    document.getElementById('comp-accuracy-a').innerText = dataA.averageAccuracy + "%";
-    document.getElementById('comp-accuracy-b').innerText = dataB.averageAccuracy + "%";
+    document.getElementById('comp-accuracy-a').innerText = dataA.averageAccuracy + '%';
+    document.getElementById('comp-accuracy-b').innerText = dataB.averageAccuracy + '%';
     document.getElementById('comp-cases-a').innerText = dataA.totalCasesRun;
     document.getElementById('comp-cases-b').innerText = dataB.totalCasesRun;
 
-    document.getElementById('comp-accuracy-a').className = "";
-    document.getElementById('comp-accuracy-b').className = "";
-    if (dataA.averageAccuracy > dataB.averageAccuracy) document.getElementById('comp-accuracy-a').className = "highlight-win";
-    else if (dataB.averageAccuracy > dataA.averageAccuracy) document.getElementById('comp-accuracy-b').className = "highlight-win";
+    document.getElementById('comp-accuracy-a').className = '';
+    document.getElementById('comp-accuracy-b').className = '';
+    if (Number(dataA.averageAccuracy) > Number(dataB.averageAccuracy)) document.getElementById('comp-accuracy-a').className = 'highlight-win';
+    else if (Number(dataB.averageAccuracy) > Number(dataA.averageAccuracy)) document.getElementById('comp-accuracy-b').className = 'highlight-win';
 }
 
-function renderPromptBreakdownMetrics() {
-    const targetTableBody = document.getElementById('prompt-matrix-body');
-    if(!targetTableBody) return;
-
-    const prompts = evaluationDetailsCache.promptBreakdown || [];
-    const hasRuns = evaluationDetailsCache.performanceTrend && evaluationDetailsCache.performanceTrend.length > 0;
-
-    if (prompts.length > 0) {
-        targetTableBody.innerHTML = '';
-        prompts.forEach(row => {
-            targetTableBody.insertAdjacentHTML('beforeend', `
-                <tr>
-                    <td class="template-name">${row.prompt_template_id || row.promptTemplateId || 'PRMPT-RAG-ENT-01'}</td>
-                    <td style="color: #94a3b8; font-weight:600;">${row.target_version || row.targetVersion || 'v2.1.0'}</td>
-                    <td><span class="token-badge-in">${row.avg_input_tokens || row.avgInputTokens || 254} tkn</span></td>
-                    <td><span class="token-badge-out">${row.avg_output_tokens || row.avgOutputTokens || 512} tkn</span></td>
-                    <td style="color: #38bdf8; font-weight: bold;">${row.success_evaluation_rate || row.successEvaluationRate || '100%'}</td>
-                </tr>
-            `);
-        });
-    } else if (hasRuns) {
-        targetTableBody.innerHTML = `
-            <tr>
-                <td class="template-name">PRMPT-RAG-ENT-01</td>
-                <td style="color: #94a3b8; font-weight:600;">v2.1.0</td>
-                <td><span class="token-badge-in">254 tkn</span></td>
-                <td><span class="token-badge-out">512 tkn</span></td>
-                <td style="color: #38bdf8; font-weight: bold;">100%</td>
-            </tr>`;
-    } else {
-        targetTableBody.innerHTML = '<tr><td colspan="5" style="color:#94a3b8;">No active prompt evaluation logs recorded.</td></tr>';
+function renderLog() {
+    const box = document.getElementById('terminal-console');
+    const trend = getTrend();
+    if (trend.length === 0) {
+        box.innerHTML = '<div style="color:#94a3b8;">No evaluation runs logged yet.</div>';
+        return;
     }
+    box.innerHTML = trend.slice(-20).map(item => {
+        const pass = Number(item.accuracy) >= PASS_MARK;
+        const color = pass ? '#34d399' : '#f87171';
+        return `<div style="color:${color};">[${esc(item.date)}] Evaluation ${pass ? 'PASSED' : 'FAILED'} - accuracy ${esc(item.accuracy)}%</div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
 }
 
-function updateTerminalLogs() {
-    const terminalBox = document.getElementById('terminal-console');
-    if (!terminalBox) return;
+async function runNewEvaluation() {
+    const btn = document.getElementById('run-eval-btn');
+    const status = document.getElementById('run-eval-status');
+    const prompt = document.getElementById('run-eval-prompt').value.trim();
+    const truth = document.getElementById('run-eval-truth').value.trim();
+    if (!prompt) { status.textContent = 'Please enter a prompt.'; return; }
 
-    const now = new Date().toLocaleTimeString();
-    terminalBox.innerHTML = `
-        <div style="color:#38bdf8;">[${now}] INFO: System Gateway Initialized.</div>
-        <div style="color:#34d399;">[${now}] EVALUATION_RUN: Executing test suite for prompt evaluation...</div>
-    `;
+    btn.disabled = true;
+    status.textContent = 'Running... first run can take up to 50 seconds (free server waking up).';
+    try {
+        const res = await fetch(`${BACKEND_URL}/api/eval/run`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt, groundTruth: truth })
+        });
+        const data = await res.json();
+        if (!data.success) {
+            status.textContent = 'Failed: ' + (data.error || 'Unknown error');
+        } else {
+            status.textContent = 'Verdict: ' + data.verdict + ' | Accuracy: ' + data.accuracy + '% | Model: ' + data.model + ' | Answer: ' + data.output;
+            await loadDashboard();
+        }
+    } catch (e) {
+        status.textContent = 'Network error: ' + e.message;
+    }
+    btn.disabled = false;
 }
+
+loadDashboard();
 </script>
 </body>
 </html>
