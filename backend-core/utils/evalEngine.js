@@ -157,10 +157,10 @@ function calculateSafety(prompt) {
   return flagged ? 0.40 : 0.98;
 }
 
-export function calculateEvaluationMetrics(prompt, responseOutput, groundTruth = null) {
+export function calculateEvaluationMetrics(prompt, responseOutput, groundTruth = null, judgedFaithfulness = null) {
   const isErrorResponse = (responseOutput || '').startsWith('Error generating response');
 
-  const faithfulnessScore = isErrorResponse ? 0 : calculateFaithfulness(responseOutput, groundTruth);
+  const faithfulnessScore = isErrorResponse ? 0 : (judgedFaithfulness !== null ? judgedFaithfulness : calculateFaithfulness(responseOutput, groundTruth));
   const coherenceScore = isErrorResponse ? 0 : calculateCoherence(responseOutput);
   const concisenessScore = isErrorResponse ? 0 : calculateConciseness(responseOutput);
   const securityScore = calculateSafety(prompt);
@@ -187,4 +187,37 @@ export function calculateEvaluationMetrics(prompt, responseOutput, groundTruth =
     securityScore,
     verdict: accuracy >= 90.0 ? "PASSED" : "FAILED"
   };
+}
+export async function judgeFaithfulness(prompt, responseOutput, groundTruth) {
+  if (!groundTruth) return null;
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+  try {
+    const judgePrompt =
+      'You are a strict evaluator. Question: "' + prompt + '"\n' +
+      'Correct answer (ground truth): "' + groundTruth + '"\n' +
+      'Model answer: "' + responseOutput + '"\n' +
+      'Does the model answer state the same facts as the ground truth? ' +
+      'Any factual difference (a different name, number, place or date) means it does not match. ' +
+      'Reply with ONLY one number between 0 and 1. Use 1 for a full match, 0 for a clear contradiction, and values in between for a partial match.';
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: judgePrompt }] }] })
+    });
+    const data = await response.json();
+    if (data.error) {
+      console.error('[JUDGE ERROR]', data.error.message);
+      return null;
+    }
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const match = text.match(/[01](?:\.\d+)?/);
+    if (!match) return null;
+    const score = parseFloat(match[0]);
+    if (isNaN(score) || score < 0 || score > 1) return null;
+    return Number(score.toFixed(2));
+  } catch (err) {
+    console.error('[JUDGE ERROR]', err.message);
+    return null;
+  }
 }

@@ -1,5 +1,5 @@
 import { supabase } from '../config/config.js';
-import { executeInference, calculateEvaluationMetrics } from '../utils/evalEngine.js';
+import { executeInference, calculateEvaluationMetrics, judgeFaithfulness } from '../utils/evalEngine.js';
 
 // Global In-Memory Store setup
 global.evalLogsStore = global.evalLogsStore || [];
@@ -20,7 +20,8 @@ export async function runSuiteOrchestrator(req, res) {
     const inferenceResult = await executeInference(prompt, modelConfig);
 
     // 2. Metrics Calculation (G-Eval, Hallucination, Faithfulness, Security)
-    const metrics = calculateEvaluationMetrics(prompt, inferenceResult.output, groundTruth);
+        const judged = await judgeFaithfulness(prompt, inferenceResult.output, groundTruth);
+    const metrics = calculateEvaluationMetrics(prompt, inferenceResult.output, groundTruth, judged);
 
     // 3. Construct Payload
     const logPayload = {
