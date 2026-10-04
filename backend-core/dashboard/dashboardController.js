@@ -59,8 +59,7 @@ export async function getEvaluationDetails(req, res) {
 
     // 1. Performance Trend Line
     const performanceTrend = safeLogs.map(entry => ({
-      date: new Date(entry.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      accuracy: entry.accuracy || 0
+       date: new Date(entry.created_at || Date.now()).toLocaleString('en-GB', { timeZone: 'UTC', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }),    accuracy: entry.accuracy || 0
     }));
 
     const latestLog = hasRealData ? safeLogs[safeLogs.length - 1] : null;
