@@ -46,7 +46,7 @@ export async function getDashboardMetrics(req, res) {
 export async function getEvaluationDetails(req, res) {
   try {
     let logs = [];
-    const { data: dbLogs } = await supabase.from('evaluation_logs').select('*');
+        const { data: dbLogs } = await supabase.from('evaluation_logs').select('*').order('created_at', { ascending: true });
     if (dbLogs && dbLogs.length > 0) {
       logs = dbLogs;
     } else {
