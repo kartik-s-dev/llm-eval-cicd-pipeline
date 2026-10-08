@@ -22,7 +22,19 @@ export async function runSuiteOrchestrator(req, res) {
     // 2. Metrics Calculation (G-Eval, Hallucination, Faithfulness, Security)
         const judged = await judgeFaithfulness(prompt, inferenceResult.output, groundTruth);
     const metrics = calculateEvaluationMetrics(prompt, inferenceResult.output, groundTruth, judged);
-
+    if (req.body.dryRun) {
+      return res.status(200).json({
+        success: true,
+        dryRun: true,
+        judgeUsed: judged !== null,
+        model: selectedModel,
+        output: inferenceResult.output,
+        accuracy: metrics.accuracy,
+        faithfulnessScore: metrics.faithfulnessScore,
+        hallucinationScore: metrics.hallucinationScore,
+        verdict: metrics.verdict
+      });
+    }
     // 3. Construct Payload
     const logPayload = {
       created_at: new Date().toISOString(),
