@@ -53,13 +53,20 @@ async function callEvalOnce(testCase) {
 }
 
 async function callEval(testCase) {
-  try {
-    return await callEvalOnce(testCase);
-  } catch (firstErr) {
-    console.log(`  retrying once after: ${firstErr.message}`);
-    await sleep(DELAY_MS);
-    return await callEvalOnce(testCase);
+  const waits = [10000, 20000, 30000];
+  let lastErr;
+  for (let attempt = 0; attempt <= waits.length; attempt++) {
+    try {
+      return await callEvalOnce(testCase);
+    } catch (err) {
+      lastErr = err;
+      if (attempt < waits.length) {
+        console.log(`  retry ${attempt + 1} of ${waits.length} after: ${err.message}`);
+        await sleep(waits[attempt]);
+      }
+    }
   }
+  throw lastErr;
 }
 
 async function main() {
