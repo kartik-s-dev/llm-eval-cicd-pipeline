@@ -18,6 +18,10 @@ export async function runSuiteOrchestrator(req, res) {
 
     // 1. Multi-LLM Inference Execution
     const inferenceResult = await executeInference(prompt, modelConfig);
+    if ((inferenceResult.output || '').startsWith('Error generating response')) {
+      console.error('[ORCHESTRATOR] Gemini failed, nothing saved:', inferenceResult.output);
+      return res.status(503).json({ success: false, error: 'Gemini is busy or failed. Try again in a minute. Nothing was saved.' });
+    }
 
     // 2. Metrics Calculation (G-Eval, Hallucination, Faithfulness, Security)
         const judged = await judgeFaithfulness(prompt, inferenceResult.output, groundTruth);
