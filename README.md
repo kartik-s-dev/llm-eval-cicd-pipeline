@@ -49,7 +49,8 @@ Environment variables used by the backend: `GEMINI_API_KEY`, `SUPABASE_URL`,
 You need a Supabase table named `evaluation_logs` with these columns: id,
 created_at, prompt_text, response_output, model, model_name, pipeline,
 accuracy, geval_cot_score, hallucination_score, faithfulness_score,
-answer_relevance, security_score, log_level, message.
+answer_relevance, security_score, log_level, message. (The column
+`answer_relevance` stores the conciseness score.)
 
 ## API
 
@@ -58,6 +59,7 @@ answer_relevance, security_score, log_level, message.
   With `"dryRun": true` the result is not saved (used by the CI gate).
 - `GET /api/dashboard/metrics`: totals and average accuracy.
 - `GET /api/dashboard/evaluation-details`: data for all dashboard panels.
+- `GET /api/v1/system/status`: readiness check.
 
 ## Tests and CI
 
@@ -74,6 +76,8 @@ answer_relevance, security_score, log_level, message.
 - The gate needs a GitHub secret named `EVAL_GATEWAY_URL` set to the backend URL.
 - It was checked in both directions: it passed 10 out of 10 against the live
   backend, and it failed the build when the secret pointed to a wrong URL.
+- `.github/workflows/keep-alive.yml` calls the backend every 3 days so the free
+  backend and database are less likely to go idle and pause.
 
 ## Project structure
 
@@ -104,19 +108,25 @@ After the initial submission, these issues were found and fixed:
 - **CI gate**: the old gate called localhost and always passed. It was
   replaced with the real gate described above.
 - **Dashboard order bug**: logs are now sorted by time, so the "latest run" is correct.
+- **Dead code removed**: unused telemetry and GitHub endpoints, plus unused
+  helper files (brute-force check, crypto helper, telemetry tracker), were deleted.
+  `node-fetch` is now declared in `package.json`.
 
 ## Known limitations
 
+- **`POST /api/eval/run` has no login or API key.** Anyone who knows the URL can
+  call it, use up the Gemini quota and add rows to the database.
+- **CORS is open to all origins** (`origin: '*'`).
+- The `evaluation_logs` table currently allows open reads and inserts (demo
+  policy). Do not store sensitive data in it.
 - The judge and the answer both come from the same Gemini model, so the judge
   can be biased. It was only checked on a small, easy test set (10 cases).
 - Only Gemini was tested. Other providers mentioned in the code are not verified.
 - The dashboard runs one prompt at a time. Batch evaluation exists only in the CI gate.
 - Latency, token counts and cost are not measured.
 - Chart times are shown in UTC.
-- The `evaluation_logs` table currently allows open reads and inserts (demo
-  policy). Do not store sensitive data in it.
 - Supabase free tier pauses after about 7 days of inactivity.
 - Forgot Password confirms whether an email exists but does not send a real
   reset email yet.
-- A Langfuse tracing helper remains in `backend-core/monitoring/`. It is not
-  shown on the dashboard and has not been verified.
+- `npm install` reports known vulnerabilities in dependencies (38 at the time of
+  writing). They have not been reviewed yet.
