@@ -149,6 +149,7 @@
         const password = document.getElementById('password').value;
         const errorMessage = document.getElementById('error-message');
         const successMessage = document.getElementById('success-message');
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
         
         errorMessage.style.display = 'none';
         successMessage.style.display = 'none';
@@ -160,7 +161,8 @@
 
         try {
           successMessage.style.display = 'block';
-          successMessage.innerText = "Processing Cloud Authentication Sync...";
+          successMessage.innerText = "Signing in... if the server was asleep, this can take up to 50 seconds. Please wait.";
+          submitBtn.disabled = true;
 
           const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
             method: 'POST',
@@ -202,6 +204,8 @@
           errorMessage.style.display = 'block';
           errorMessage.innerText = err.message || 'Login failed. Please check your credentials and try again.';
           successMessage.style.display = 'none';
+        } finally {
+          submitBtn.disabled = false;
         }
       });
     }
