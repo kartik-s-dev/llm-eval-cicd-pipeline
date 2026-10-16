@@ -108,6 +108,7 @@
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
+    const submitBtn = document.getElementById('signup-form').querySelector('button[type="submit"]');
     const notifBox = document.getElementById('notification-box');
     
     notifBox.style.display = 'none';
@@ -123,7 +124,8 @@
 
     try {
       notifBox.className = "notification success";
-      notifBox.innerText = "Processing registration...";
+      notifBox.innerText = "Creating account... if the server was asleep, this can take up to 50 seconds. Please wait.";
+      submitBtn.disabled = true;
       notifBox.style.display = "block";
 
       // Dynamic Host Resolver (same pattern as Login.html) — works on localhost
@@ -156,6 +158,8 @@
       notifBox.className = "notification error";
       notifBox.style.display = 'block';
       notifBox.innerText = err.message;
+    } finally {
+      submitBtn.disabled = false;
     }
   });
 </script>
