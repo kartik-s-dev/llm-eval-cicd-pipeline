@@ -126,7 +126,20 @@ After the initial submission, these issues were found and fixed:
 - Latency, token counts and cost are not measured.
 - Chart times are shown in UTC.
 - Supabase free tier pauses after about 7 days of inactivity.
-- Forgot Password confirms whether an email exists but does not send a real
-  reset email yet.
+- Forgot Password calls Supabase Auth's password reset. Email delivery was
+  not tested, and the success message is shown even for an unknown email.
 - `npm install` reports known vulnerabilities in dependencies (38 at the time of
   writing). They have not been reviewed yet.
+- The backend does not issue a real session token. After login the browser
+  creates its own `session_<id>_<time>` marker, and the dashboard only checks
+  that it exists. Treat the login page as a demo, not as real access control.
+- The `/api/dashboard/*` endpoints can be called without logging in.
+- This repo has no password hashing or login throttling code of its own.
+  Signup, login and password reset use Supabase Auth. The `login_attempts`
+  table is not used by the backend code that was checked.
+- If Gemini returns an empty answer, or the API key is missing, the backend can
+  still score and save that placeholder text as if it were a real answer. Only
+  an outright Gemini error is blocked (the backend returns 503 and saves nothing).
+- The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
+  retries 3 times and can still fail. It has passed only 2 times so far, so
+  do not treat it as stable yet.
