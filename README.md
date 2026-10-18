@@ -141,5 +141,5 @@ After the initial submission, these issues were found and fixed:
   still score and save that placeholder text as if it were a real answer. Only
   an outright Gemini error is blocked (the backend returns 503 and saves nothing).
 - The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
-  retries 3 times and can still fail. It has passed only 2 times so far, so
-  do not treat it as stable yet.
+  retries 3 times and can still fail. Its result depends on how available
+  Gemini is at that moment, so do not treat it as stable.
