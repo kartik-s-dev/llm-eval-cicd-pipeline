@@ -76,6 +76,8 @@ answer_relevance, security_score, log_level, message. (The column
 - The gate needs a GitHub secret named `EVAL_GATEWAY_URL` set to the backend URL.
 - It was checked in both directions: it passed 10 out of 10 against the live
   backend, and it failed the build when the secret pointed to a wrong URL.
+  A run can also fail when Gemini is overloaded. The gate retries each case
+  up to 3 times before it counts the case as an error.
 - `.github/workflows/keep-alive.yml` calls the backend every 3 days so the free
   backend and database are less likely to go idle and pause.
 
