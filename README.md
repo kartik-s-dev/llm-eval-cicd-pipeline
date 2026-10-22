@@ -145,3 +145,6 @@ After the initial submission, these issues were found and fixed:
 - The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
   retries 3 times and can still fail. Its result depends on how available
   Gemini is at that moment, so do not treat it as stable.
+- Email confirmation was not required for the accounts tested: a signup with a
+  fake `@example.com` address could log in right away. Anyone can create an
+  account this way, so do not treat the login as proof of identity.
