@@ -12,7 +12,7 @@ export async function executeInference(prompt, modelConfig = {}) {
   if (modelName.includes('gemini')) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return { output: `[Simulated Gemini Output for prompt: "${prompt}"]`, provider: 'Google Gemini' };
+      return { output: 'Error generating response via Gemini: no API key configured', provider: 'Google Gemini' };
     }
     try {
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
@@ -25,7 +25,7 @@ export async function executeInference(prompt, modelConfig = {}) {
         console.error("[GEMINI API ERROR]", data.error.message);
         return { output: `Error generating response via Gemini: ${data.error.message}`, provider: 'Google Gemini' };
       }
-      const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response text generated.";
+      const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Error generating response via Gemini: empty response";
       return { output: outputText, provider: 'Google Gemini' };
     } catch (err) {
       console.error("[GEMINI API ERROR]", err.message);
