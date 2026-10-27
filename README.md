@@ -139,9 +139,9 @@ After the initial submission, these issues were found and fixed:
 - This repo has no password hashing or login throttling code of its own.
   Signup, login and password reset use Supabase Auth. The `login_attempts`
   table is not used by the backend code that was checked.
-- If Gemini returns an empty answer, or the API key is missing, the backend can
-  still score and save that placeholder text as if it were a real answer. Only
-  an outright Gemini error is blocked (the backend returns 503 and saves nothing).
+- If Gemini returns an empty answer, or the API key is missing, the backend treats
+  it as an error (same path as a Gemini error) and does not save the evaluation.
+  This was changed in code but not tested separately.
 - The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
   retries 3 times and can still fail. Its result depends on how available
   Gemini is at that moment, so do not treat it as stable.
