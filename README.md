@@ -109,6 +109,12 @@ After the initial submission, these issues were found and fixed:
 - **Run Evaluation button** added to the dashboard.
 - **CI gate**: the old gate called localhost and always passed. It was
   replaced with the real gate described above.
+- **CI gate changes**: the gate now retries a failed Gemini call 3 times
+  (waits of 10, 20 and 30 seconds). If Gemini still returns an error (503), the
+  backend saves nothing for that case, and the gate counts it as an error and
+  fails the build. The gate has a 25 minute timeout. An empty Gemini answer or a
+  missing API key is now treated as an error too. Some CI runs failed because
+  of Gemini 503 errors and passed on re-run. The cause is not confirmed.
 - **Dashboard order bug**: logs are now sorted by time, so the "latest run" is correct.
 - **Dead code removed**: unused telemetry and GitHub endpoints, plus unused
   helper files (brute-force check, crypto helper, telemetry tracker), were deleted.
