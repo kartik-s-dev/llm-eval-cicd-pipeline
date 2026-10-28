@@ -145,6 +145,8 @@ After the initial submission, these issues were found and fixed:
   creates its own `session_<id>_<time>` marker, and the dashboard only checks
   that it exists. Treat the login page as a demo, not as real access control.
 - The `/api/dashboard/*` endpoints can be called without logging in.
+- The `/api/v1/logs/stream` endpoint (recent server log lines) can also be
+  called without logging in.
 - This repo has no password hashing or login throttling code of its own.
   Signup, login and password reset use Supabase Auth. The `login_attempts`
   table is not used by the backend code that was checked.
