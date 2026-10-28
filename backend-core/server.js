@@ -17,7 +17,13 @@ global.liveSystemLogs = global.liveSystemLogs || [
 ];
 
 // CORS & Middleware Config
-app.use(cors({ origin: '*' }));
+// Only the live dashboard and local testing may call this API from a browser
+const allowedOrigins = [
+  'https://llm-eval-cicd-pipeline.vercel.app',
+  'http://localhost:5000',
+  'http://127.0.0.1:5000'
+];
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Render runs behind one proxy, so trust 1 hop to see the real client IP
