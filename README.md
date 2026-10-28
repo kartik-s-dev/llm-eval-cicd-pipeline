@@ -124,6 +124,9 @@ After the initial submission, these issues were found and fixed:
 
 - **`POST /api/eval/run` has no login or API key.** Anyone who knows the URL can
   call it, use up the Gemini quota and add rows to the database.
+  A basic rate limit (60 requests per 15 minutes per IP) was added. It slows
+  down one caller, but it does not stop someone using many IPs. Whether the
+  proxy setting on Render counts each caller separately was not confirmed.
 - **CORS is open to all origins** (`origin: '*'`).
 - The `evaluation_logs` table currently allows open reads and inserts (demo
   policy). Do not store sensitive data in it.
