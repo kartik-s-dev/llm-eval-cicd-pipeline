@@ -127,7 +127,11 @@ After the initial submission, these issues were found and fixed:
   A basic rate limit (60 requests per 15 minutes per IP) was added. It slows
   down one caller, but it does not stop someone using many IPs. Whether the
   proxy setting on Render counts each caller separately was not confirmed.
-- **CORS is open to all origins** (`origin: '*'`).
+- **CORS is limited to the Vercel dashboard and localhost** (port 5000).
+  This only stops other websites from calling the API in a browser. Curl,
+  scripts and servers can still call every endpoint. It is not a login or API
+  key. Vercel preview URLs are not allowed. Signup and Forgot Password were
+  not tested in the browser after this change.
 - The `evaluation_logs` table currently allows open reads and inserts (demo
   policy). Do not store sensitive data in it.
 - The judge and the answer both come from the same Gemini model, so the judge
