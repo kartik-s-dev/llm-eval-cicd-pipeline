@@ -157,6 +157,11 @@ After the initial submission, these issues were found and fixed:
 - If Gemini returns an empty answer, or the API key is missing, the backend treats
   it as an error (same path as a Gemini error) and does not save the evaluation.
   This was changed in code but not tested separately.
+- The Supabase database also has an old `users` table (4 rows, 2 with a
+  password hash). The backend code does not use it (only 3 search patterns
+  were checked). Anyone with the public key could read it before. That read
+  policy was removed. The rows were not deleted, and one update policy that
+  needs a login is still there.
 - The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
   retries 3 times and can still fail. Its result depends on how available
   Gemini is at that moment, so do not treat it as stable.
