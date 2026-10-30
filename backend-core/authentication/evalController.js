@@ -1,4 +1,4 @@
-import { supabase } from '../config/config.js';
+import { supabase, supabaseAdmin } from '../config/config.js';
 import { executeInference, calculateEvaluationMetrics, judgeFaithfulness } from '../utils/evalEngine.js';
 
 // Global In-Memory Store setup
@@ -61,7 +61,7 @@ export async function runSuiteOrchestrator(req, res) {
     global.evalLogsStore.push(logPayload);
 
     // 4. Also try logging to Supabase DB
-    const { data: logEntry, error: dbError } = await supabase
+    const { data: logEntry, error: dbError } = await (supabaseAdmin || supabase)
       .from('evaluation_logs')
       .insert([logPayload])
       .select();

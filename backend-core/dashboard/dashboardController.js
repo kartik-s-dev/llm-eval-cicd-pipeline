@@ -1,4 +1,4 @@
-import { supabase } from '../config/config.js';
+import { supabase, supabaseAdmin } from '../config/config.js';
 
 // Fallback store. It is used only when the database returns no rows
 // (for example when the database is unreachable).
@@ -6,7 +6,7 @@ global.evalLogsStore = global.evalLogsStore || [];
 
 async function loadLogs() {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (supabaseAdmin || supabase)
       .from('evaluation_logs')
       .select('*')
       .order('created_at', { ascending: true });

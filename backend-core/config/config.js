@@ -17,6 +17,12 @@ export const supabase = createClient(
   supabaseAnonKey
 );
 
+// Admin client: server-only, uses the secret key. Stays null if the key is not set.
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+export const supabaseAdmin = supabaseServiceKey
+  ? createClient(supabaseUrl, supabaseServiceKey)
+  : null;
+
 /**
  * Validates production cloud platform infrastructure readiness checks
  */
