@@ -149,8 +149,10 @@ After the initial submission, these issues were found and fixed:
 - Supabase free tier pauses after about 7 days of inactivity.
 - Forgot Password calls Supabase Auth's password reset. Email delivery was
   not tested, and the success message is shown even for an unknown email.
-- `npm install` reports known vulnerabilities in dependencies (13 at the time of
-  writing). They have not been reviewed yet.
+- `npm audit` reports 22 known issues (4 low, 18 moderate, 0 high or critical) as of
+  31 Oct 2026, after `npm audit fix` (without `--force`). Most are in `jest`, which
+  is used only for tests. One moderate issue in `qs` (inside `express`) is in the
+  runtime code and is not fixed yet.
 - The backend does not issue a real session token. After login the browser
   creates its own `session_<id>_<time>` marker, and the dashboard only checks
   that it exists. Treat the login page as a demo, not as real access control.
