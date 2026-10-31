@@ -21,7 +21,8 @@ can take up to 50 seconds.
 5. **Accuracy** is the average of these four scores. A run **PASSES at 90 or above**.
 6. The result is saved in the Supabase table `evaluation_logs`.
 7. The dashboard reads the table and shows totals, pass/fail history, a trend
-   chart, quality gates and a model comparison.
+   chart, quality gates, a system status panel (frontend, backend, database)
+   and a model comparison.
 
 ## Scoring (read before trusting the numbers)
 
@@ -115,7 +116,10 @@ After the initial submission, these issues were found and fixed:
   backend saves nothing for that case, and the gate counts it as an error and
   fails the build. The gate has a 25 minute timeout. An empty Gemini answer or a
   missing API key is now treated as an error too. Some CI runs failed because
-  of Gemini 503 errors and passed on re-run. The cause is not confirmed.
+  of Gemini 503 errors and passed on re-run. The cause is not confirmed. In CI
+  logs, a failed try shows as "This operation was aborted" (probably the free
+  Render server waking up, not confirmed), "HTTP 502" or "HTTP 503". The gate
+  retries these.
 - **Dashboard order bug**: logs are now sorted by time, so the "latest run" is correct.
 - **Dead code removed**: unused telemetry and GitHub endpoints, plus unused
   helper files (brute-force check, crypto helper, telemetry tracker), were deleted.
@@ -128,7 +132,8 @@ After the initial submission, these issues were found and fixed:
   A basic rate limit (60 requests per 15 minutes per IP) was added. It slows
   down one caller, but it does not stop someone using many IPs. Whether the
   proxy setting on Render counts each caller separately was not confirmed.
-- **CORS is limited to the Vercel dashboard and localhost** (port 5000).
+- **CORS is limited to the Vercel dashboard and local addresses** (`localhost` and
+  `127.0.0.1`, port 5000).
   This only stops other websites from calling the API in a browser. Curl,
   scripts and servers can still call every endpoint. It is not a login or API
   key. Vercel preview URLs are not allowed. Signup and Forgot Password were
@@ -166,8 +171,8 @@ After the initial submission, these issues were found and fixed:
   it as an error (same path as a Gemini error) and does not save the evaluation.
   This was changed in code but not tested separately.
 - The Supabase database also has an old `users` table (4 rows, 2 with a
-  password hash). The backend code does not use it (only 3 search patterns
-  were checked). Anyone with the public key could read it before. That read
+  password hash). A text search of the backend code found no use of it.
+  Anyone with the public key could read it before. That read
   policy was removed. The rows were not deleted, and one update policy that
   needs a login is still there.
 - The CI gate depends on the live Gemini API. If Gemini is overloaded, the gate
