@@ -44,7 +44,8 @@ can take up to 50 seconds.
     npm start              # runs on http://localhost:5000
 
 Environment variables used by the backend: `GEMINI_API_KEY`, `SUPABASE_URL`,
-`SUPABASE_ANON_KEY`.
+`SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY` (needed for `evaluation_logs`; without it the
+backend falls back to the anon key, which has no access to that table now).
 
 You need a Supabase table named `evaluation_logs` with these columns: id,
 created_at, prompt_text, response_output, model, model_name, pipeline,
@@ -132,8 +133,13 @@ After the initial submission, these issues were found and fixed:
   scripts and servers can still call every endpoint. It is not a login or API
   key. Vercel preview URLs are not allowed. Signup and Forgot Password were
   not tested in the browser after this change.
-- The `evaluation_logs` table currently allows open reads and inserts (demo
-  policy). Do not store sensitive data in it.
+- The `evaluation_logs` table has Row Level Security on and no policies.
+  Direct access with the Supabase publishable key is blocked (checked with
+  curl: a read returned an empty list, an insert returned 401). The backend
+  reads and writes it with a Supabase secret key (`SUPABASE_SERVICE_KEY`).
+  Without that key on the server, the dashboard and Run Evaluation will not
+  work. This does not protect the data behind the backend: `/api/dashboard/*`,
+  `/api/v1/logs/stream` and `POST /api/eval/run` still work without login.
 - The judge and the answer both come from the same Gemini model, so the judge
   can be biased. It was only checked on a small, easy test set (10 cases).
 - Only Gemini was tested. Other providers mentioned in the code are not verified.
